@@ -29,7 +29,7 @@ function concatGroupJsons()
 						combinedJSON = mergeJSON.merge(groupJSONs[0], groupJSONs[1], groupJSONs[2], groupJSONs[3]); // Need to manually add more merging here
 						try
 						{
-							fs.writeFile("classJSON.json", combinedJSON, 'utf-8', function (err)  // File writer for saving a json file, not done
+							fs.writeFile("classJSON.json", combinedJSON, 'utf-8', function (err)  
 							{
 								if (err) 
 								{
@@ -79,23 +79,23 @@ concatGroupJsons();
 var server = http.createServer(function (request, response)  // On user connect
 {
 	try
-	{
-		var combined = mergeJSON.merge(groupJSONs[0], groupJSONs[1], groupJSONs[2], groupJSONs[2]);
-		response.write(JSON.stringify(combined));
-	} 
-	catch (err) 
-	{
-		try
 		{
 			var importedJSON = JSON.parse(fs.readFileSync('classJSON.json', 'utf8'));
 			response.write(JSON.stringify(importedJSON, null, 4));
 		}
 		catch (err) 
 		{
-			response.writeHead(200, { "Content-Type": "text/plain" });
-			response.write("Something went wrong... " + err);
+			try
+			{
+				var combined = mergeJSON.merge(groupJSONs[0], groupJSONs[1], groupJSONs[2], groupJSONs[2]);
+				response.write(JSON.stringify(combined));
+			} 
+			catch (err) 
+			{
+				response.writeHead(200, { "Content-Type": "text/plain" });
+				response.write("Something went wrong... " + err);
+			}
 		}
-	}
 	try
 	{
 		var lastUpdated = fs.readFileSync('lastUpdated.txt', 'utf8');
