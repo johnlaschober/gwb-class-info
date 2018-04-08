@@ -75,6 +75,22 @@ function formatJSON()
 			groupJSONs[i] = groupJSONs[i].replace(/role/gi, "Roles");
 		}
 		groupJSONs[i] = JSON.parse(groupJSONs[i]);
+		// Below: Fix for teams who have a team header but no TeamName assigned to individuals
+		for (j = 0; j < groupJSONs[i].members.length; j++) 
+		{
+			if (groupJSONs[i].members[j].TeamName == null)
+			{
+				try
+				{
+					groupJSONs[i].members[j].TeamName = groupJSONs[i].TeamName;
+				}
+				catch (err)
+				{
+					groupJSONs[i].members[j].TeamName = "Unlisted";
+				}
+			}
+		}
+
 		try
 		{
 			delete groupJSONs[i].TeamName;
