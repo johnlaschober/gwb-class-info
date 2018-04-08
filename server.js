@@ -4,7 +4,7 @@ var request = require('request'); // Imports libraries
 var fs = require('fs');
 
 var groupJSONs = [];
-var allURLs = ["http://gwb-json-info.azurewebsites.net/", "https://teamocelots-klump-product.azurewebsites.net/theocelotsteam.json", "https://flamingos.azurewebsites.net/json", "https://back-row-bandicoots-klump.azurewebsites.net/group"];
+var allURLs = ["http://gwb-json-info.azurewebsites.net/", "https://teamocelots-klump-product.azurewebsites.net/theocelotsteam.json", "https://flamingos.azurewebsites.net/json", "https://back-row-bandicoots-klump.azurewebsites.net/group", "https://softwareengineeringgabe.azurewebsites.net/teamInfo.json"];
 var indexStack = [];
 var lastUpdatedGlobal;
 var combinedJSON;
@@ -29,6 +29,7 @@ function concatGroupJsons()
 						combinedJSON = mergeJSON.merge(groupJSONs[0], groupJSONs[1]); // Need to manually add more merging here
 						combinedJSON = mergeJSON.merge(combinedJSON, groupJSONs[2]);
 						combinedJSON = mergeJSON.merge(combinedJSON, groupJSONs[3]);
+						combinedJSON = mergeJSON.merge(combinedJSON, groupJSONs[4]);
 						try
 						{
 							fs.writeFile("classJSON.json", combinedJSON, 'utf-8', function (err)  
@@ -67,6 +68,7 @@ function formatJSON()
 		groupJSONs[i] = groupJSONs[i].replace(/preferredName/gi, "PreferredName");
 		groupJSONs[i] = groupJSONs[i].replace(/teamName/gi, "TeamName");
 		groupJSONs[i] = groupJSONs[i].replace(/seatLocation/gi, "SeatLocation");
+		groupJSONs[i] = groupJSONs[i].replace(/\s/g, "");
 		groupJSONs[i] = groupJSONs[i].replace(/roles/gi, "Roles");
 		if (!groupJSONs[i].includes("Roles"))
 		{
@@ -97,6 +99,7 @@ var server = http.createServer(function (request, response)  // On user connect
 				var combined = mergeJSON.merge(groupJSONs[0], groupJSONs[1]); // Need to manually add more merging here
 				combined = mergeJSON.merge(combined, groupJSONs[2]);
 				combined = mergeJSON.merge(combined, groupJSONs[3]);
+				combined = mergeJSON.merge(combined, groupJSONs[4]);
 				response.write(JSON.stringify(combined));
 			} 
 			catch (err) 
