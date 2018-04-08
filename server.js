@@ -67,6 +67,7 @@ function formatJSON()
 		groupJSONs[i] = groupJSONs[i].replace(/teamName/gi, "TeamName");
 		groupJSONs[i] = groupJSONs[i].replace(/seatLocation/gi, "SeatLocation");
 		groupJSONs[i] = groupJSONs[i].replace(/roles/gi, "Roles");
+		groupJSONs[i] = groupJSONs[i].replace(/role/gi, "Roles");
 		groupJSONs[i] = JSON.parse(groupJSONs[i]);
 		try
 		{
