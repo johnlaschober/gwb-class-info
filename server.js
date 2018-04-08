@@ -6,7 +6,7 @@ var fs = require('fs');
 var groupJSONs = [];
 var allURLs = ["http://gwb-json-info.azurewebsites.net/", "https://teamocelots-klump-product.azurewebsites.net/theocelotsteam.json", "https://flamingos.azurewebsites.net/json", "https://back-row-bandicoots-klump.azurewebsites.net/group"];
 var indexStack = [];
-
+var lastUpdatedGlobal;
 var combinedJSON;
 
 function concatGroupJsons()
@@ -45,6 +45,7 @@ function concatGroupJsons()
 			}
 		});
 	}
+	lastUpdatedGlobal = Date();
 	fs.writeFile("lastUpdated.txt", Date(), 'utf-8', function (err) 
 	{ 
 		if (err) 
@@ -109,7 +110,17 @@ var server = http.createServer(function (request, response)  // On user connect
 		var lastUpdated = fs.readFileSync('lastUpdated.txt', 'utf8');
 		console.log("Info last updated: " + lastUpdated);
 	}
-	catch (err){}
+	catch (err)
+	{
+		try
+		{
+			console.log("Info last updated: " + lastUpdatedGlobal);
+		}
+		catch (err)
+		{
+			console.log("Could not log when last updated.");
+		}
+	}
 	response.end();
 });
 
