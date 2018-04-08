@@ -26,7 +26,9 @@ function concatGroupJsons()
 					formatJSON();
 					try
 					{
-						combinedJSON = mergeJSON.merge(groupJSONs[0], groupJSONs[1], groupJSONs[2], groupJSONs[3]); // Need to manually add more merging here
+						combinedJSON = mergeJSON.merge(groupJSONs[0], groupJSONs[1]); // Need to manually add more merging here
+						combinedJSON = mergeJSON.merge(combinedJSON, groupJSONs[2]);
+						combinedJSON = mergeJSON.merge(combinedJSON, groupJSONs[3]);
 						try
 						{
 							fs.writeFile("classJSON.json", combinedJSON, 'utf-8', function (err)  
@@ -87,7 +89,9 @@ var server = http.createServer(function (request, response)  // On user connect
 		{
 			try
 			{
-				var combined = mergeJSON.merge(groupJSONs[0], groupJSONs[1], groupJSONs[2], groupJSONs[2]);
+				var combined = mergeJSON.merge(groupJSONs[0], groupJSONs[1]); // Need to manually add more merging here
+				combined = mergeJSON.merge(combined, groupJSONs[2]);
+				combined = mergeJSON.merge(combined, groupJSONs[3]);
 				response.write(JSON.stringify(combined));
 			} 
 			catch (err) 
