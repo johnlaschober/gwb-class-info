@@ -121,7 +121,7 @@ var server = http.createServer(function (request, response)  // On user connect
 			catch (err) 
 			{
 				response.writeHead(200, { "Content-Type": "text/plain" });
-				response.write("Something went wrong... " + err);
+				response.write("JSON is being fetched. Please refresh the page if you see this error: " + err);
 			}
 		}
 	try
